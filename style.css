@@ -1,0 +1,70 @@
+/* 
+ * Copyright (c) 2015, Kevin Kabatra 
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, 
+ *    this list of conditions and the following disclaimer. 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+.input_text_drop_down_list {
+    background: #FFF;
+    border-bottom: 3px solid #D4D4D4;
+    border-left: 2px solid #E8E8E8;
+    border-right: 2px solid #E8E8E8;
+    border-top:  1px solid #E8E8E8;   
+    height: 20px;
+    left: 55px;    
+    margin: 15px;    
+    overflow: scroll;
+    padding: 0px;
+    position: absolute;
+    top: 20px;
+    width: 300px;
+    z-index: 1;
+}
+
+.text_drop_down_list {
+    background: #FFF;
+    border-bottom: 3px solid #D4D4D4;
+    border-left: 2px solid #E8E8E8;
+    border-right: 2px solid #E8E8E8;
+    border-top:  1px solid #E8E8E8;   
+    height: 0px;
+    left: 55px;    
+    margin: 15px;    
+    overflow: scroll;
+    padding: 0px;
+    position: absolute;
+    top: 20px;    
+    transition: height 1s;    
+    -webkit-transition: height 1s; /*Safari 3.1 to 6.0 */    
+    width: 300px;
+    z-index: 0;
+}
+
+.text_drop_down_list:hover {
+    height: 340px;
+}
+
+.text_drop_down_list p:hover {
+    cursor: pointer;
+    background-color: #95B5D6;
+    color: #FFFFFF;
+}
