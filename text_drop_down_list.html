@@ -25,176 +25,203 @@ POSSIBILITY OF SUCH DAMAGE.
 -->
 <html>
     <head>
-        <title>Example</title>
-        <link rel="stylesheet" href="styles.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Example: Text Input Drop Down</title>
+ 
+        <meta name="viewport" content="width=device-width,  initial-scale=1.0">
+        
+        <style>
+            .search_drop_down_input {
+                background   : #FFF             ;
+                border-bottom: 3px solid #D4D4D4;
+                border-left  : 2px solid #E8E8E8;
+                border-right : 2px solid #E8E8E8;
+                border-top   : 1px solid #E8E8E8;   
+                height       : 20px             ;
+                left         : 55px             ;    
+                margin       : 15px             ;    
+                overflow     : scroll           ;
+                padding      : 0px              ;
+                position     : absolute         ;
+                top          : 20px             ;
+                width        : 300px            ;
+                z-index      : 1                ;
+            }
+            
+            .search_drop_down_list {
+                background        : #FFF              ; 
+                border-bottom     : 3px solid #D4D4D4 ;
+                border-left       : 2px solid #E8E8E8 ;
+                border-right      : 2px solid #E8E8E8 ;
+                border-top        :  1px solid #E8E8E8;    
+                height            : 0px               ;
+                left              : 55px              ;    
+                margin            : 15px              ;    
+                overflow          : scroll            ;
+                padding           : 0px               ;
+                position          : absolute          ;
+                top               : 20px              ;     
+                transition        : height 1s         ;    
+                -webkit-transition: height 1s         ; /*Safari 3.1 to 6.0 */    
+                width             : 300px             ; 
+                z-index           : 0                 ;                
+            }
+        </style>
+	
     </head>
+    
     <body>
+        <noscript>
+            Please enable JavaScript to view the demo. Warm Regards.
+        </noscript>
+        
+        <div><p1>Hello World!</p1></div>
+
         <div>
-            <input class="input_text_drop_down_list"
-                   id="input_text_drop_down_list"
-                   oninput="searchValue()"
-                   type="text">
-        </div>     
-        <div class="text_drop_down_list"
-             id="text_drop_down_list"
-             style="background: #FFF;
-                    border-bottom: 3px solid #D4D4D4;
-                    border-left: 2px solid #E8E8E8;
-                    border-right: 2px solid #E8E8E8;
-                    border-top:  1px solid #E8E8E8;   
-                    height: 0px;
-                    left: 55px;    
-                    margin: 15px;    
-                    overflow: scroll;
-                    padding: 0px;
-                    position: absolute;
-                    top: 20px;    
-                    transition: height 1s;    
-                    -webkit-transition: height 1s; /*Safari 3.1 to 6.0 */    
-                    width: 300px;
-                    z-index: 0;">
-            <br>
+            <input  class   = "search_drop_down_input"
+                    id      = "search_drop_down_input"
+                    oninput = "searchValue()"
+                    type    = "text"
+            >
+        </div>
+
+        <div    class = "search_drop_down_list"
+                id    = "search_drop_down_list"
+        >            
+            
         </div>
         <script>
+            //TODO: Add support for Firefox focus event
             function addEventListener() {
-                var mInputTextDropDownList = document
-                        .getElementById('input_text_drop_down_list');
+                var searchDropDownInput = 
+                        document.getElementById('search_drop_down_input');
                 
-                //TODO: Add support for FireFox focus event
-                mInputTextDropDownList.addEventListener("focusin",
-                        focusinInputTextDropDownList);
-                mInputTextDropDownList.addEventListener("focusout",
-                        focusoutInputTextDropDownList);
+                //Calls function when focus enters element
+                searchDropDownInput.addEventListener(
+                    'focusin',
+                    searchDropDownInputFocusin
+                );
+                
+                //Calls function when focus leaves element
+                searchDropDownInput.addEventListener(
+                    'foucusout',
+                    searchDropDownInputFocusout
+                );
             }
-            addEventListener();
+            addEventListener(); //Call function
             
-            function focusinInputTextDropDownList() {
+            function searchDropDownInputFocusin() {
                 searchValue();
             }
             
-            //Do not call removeChildNodesAll(), as the onClick event for p will not fire
-            function focusoutInputTextDropDownList() {                
-                var mTextDropDownList = document
-                        .getElementById('text_drop_down_list');
-                shrinkTextDropDownList(mTextDropDownList);
+            //Do not call removeChildNodesAll(), 
+            //as the onClick event for p will not fire
+            function searchDropDownInputFocusout() {
+                hideSearchDropDownList();
             }
             
-            //221px is min height to display 5 entries
-            function expandTextDropDownList(mTextDropDownList) {
-                mTextDropDownList.style.height = '221px';
+            //221px is the minimum height to display 5 entries
+            function expandSearchDropDownList() {
+                var searchDropDownList = document.getElementById('search_drop_down_list');
+                searchDropDownList.style.height = '221px';
             }
             
-            function shrinkTextDropDownList(mTextDropDownList) {
-                mTextDropDownList.style.height = '0px';
+            function hideSearchDropDownList() {
+                var searchDropDownList = document.getElementById('search_drop_down_list');
+                searchDropDownList.style.height = '0px';
             }
             
-            function appendChildP(mTextDropDownList, mInputTextDropDownList) {
-                var p = document.createElement("P");
-                var t = document.createTextNode('Other - Create new entry');
-                p.appendChild(t);
-                    
-                addEventListenerForP(p, mInputTextDropDownList,
-                        mTextDropDownList);
-                        
-                mTextDropDownList.appendChild(p);
+            function appendChildToSearchDropDownList() {
+                var searchDropDownList = document.getElementById('search_drop_down_list');        
+                var p                  = document.createElement ('P');
+                var textNode           = document.createTextNode('Other - Create new entry');
+                p.appendChild(textNode);
+                addEventListenerToP(p);
+                searchDropDownList.appendChild(p);
             }
             
-            function addEventListenerForP(mP, mInputTextDropDownList,
-                    mTextDropDownList) {
+            function addEventListenerToP(p) {
+                var searchDropDownInput = document.getElementById('search_drop_down_input');
                 if(typeof addEventListener === 'function') {
-                    mP.addEventListener('click', function () {
-                        console.log(this.childNodes[0].nodeValue);
-                        mInputTextDropDownList.value = 
-                                this.childNodes[0].nodeValue;
-                        shrinkTextDropDownList(mTextDropDownList);
-                        removeChildNodesAll(mTextDropDownList);
-                    });
-                /*
+                    p.addEventListener(
+                        'click',
+                        function () {
+                            console.log(this.childNodes[0].nodeValue);
+                            searchDropDownInput.value = this.childNodes[0].nodeValue;
+                            hideSearchDropDownList();
+                            removeChildNodesAll   ();
+                        }
+                    );
+                 /*
                  * attachEvent() for Internet Explorer: prior to 9.0 
                  * and Opera: prior to 7.0 
                  */
                 } else if(typeof attachEvent === 'function') {
-                    mP.attachEvent('onclick', function () {
-                        console.log(this.childNodes[0].nodeValue);
-                        mInputTextDropDownList.value = 
-                                this.childNodes[0].nodeValue;
-                        shrinkTextDropDownList(mTextDropDownList);
-                        removeChildNodesAll(mTextDropDownList);
-                    });
+                    p.attachEvent(
+                        'onclick',
+                        function () {
+                            console.log(this.childNodes[0].nodeValue);
+                            searchDropDownInput.value = this.childNodes[0].nodeValue;
+                            hideSearchDropDownList();
+                            removeChildNodesAll   ();
+                        }
+                    );
                 }
             }
             
-            function addChildNodesAllTextDropDownList(mArrayIndustryList) {
-                var mInputTextDropDownList = document
-                        .getElementById('input_text_drop_down_list');
-                var mTextDropDownList = document
-                        .getElementById('text_drop_down_list');
+            function addEntireArrayToSearchDropDownList(dropDownList) {
+                var searchDropDownList  = document.getElementById('search_drop_down_list' );
+                expandSearchDropDownList();
                 
-                expandTextDropDownList(mTextDropDownList);
-                
-                var indexArrayIndustryList;
-                for(indexArrayIndustryList = 0; 
-                        indexArrayIndustryList <mArrayIndustryList.length;
-                        ++indexArrayIndustryList) {
-                    var p = document.createElement("P");
-                    var t = document.createTextNode(mArrayIndustryList
-                            [indexArrayIndustryList]);
-                    p.appendChild(t);
-
-                    addEventListenerForP(p, mInputTextDropDownList,
-                        mTextDropDownList);
-
-                    mTextDropDownList.appendChild(p);
+                var indexDropDownList;
+                for(indexDropDownList = 0;
+                        indexDropDownList < dropDownList.length;
+                        ++indexDropDownList) {
+                    var p = document.createElement('P');
+                    var textNode = document.createTextNode(dropDownList[indexDropDownList]);
+                    p.appendChild(textNode);
+                    addEventListenerToP(p);
+                    searchDropDownList.appendChild(p);
                 }
-                appendChildP(mTextDropDownList, mInputTextDropDownList);
             }
-            
-            function addChildNodesDynamicTextDropDownList(mArrayIndustryList) {
-                var mInputTextDropDownList = document
-                        .getElementById('input_text_drop_down_list');
-                var mTextDropDownList = document
-                        .getElementById('text_drop_down_list');
+
+            function addSelectedArrayToSearchDropDownList(dropDownList) {
+                var searchDropDownInput = document.getElementById('search_drop_down_input');
+                var searchDropDownList  = document.getElementById('search_drop_down_list' );
+                expandSearchDropDownList();
                 
-                expandTextDropDownList(mTextDropDownList);
-                
-                var indexArrayIndustryList;
-                for(indexArrayIndustryList = 0; 
-                        indexArrayIndustryList <mArrayIndustryList.length;
-                        ++indexArrayIndustryList) {
-                    if(mArrayIndustryList[indexArrayIndustryList]
-                            .toLowerCase()
-                            .indexOf(mInputTextDropDownList.value
-                            .toLowerCase()) 
-                            !== -1) {
-                        var p = document.createElement("P");
-                        var t = document.createTextNode(mArrayIndustryList
-                                [indexArrayIndustryList]);
-                        p.appendChild(t);
-                        
-                        addEventListenerForP(p, mInputTextDropDownList,
-                            mTextDropDownList);
-                        
-                        mTextDropDownList.appendChild(p);
+                var index;
+                for(index = 0; index < dropDownList.length; ++index) {
+                    //console.log("TESTING: Value of input = " + searchDropDownInput.value);
+                    //console.log("TESTING: Value of index = " + dropDownList[index]      );
+                    
+                    var userInput = searchDropDownInput.value.toLowerCase();
+                    var substringDropDownList = dropDownList[index].substring(0, userInput.length).toLowerCase();
+                    //console.log("TESING: Value of substring = " + substringDropDownList);
+                    
+                    if(substringDropDownList.localeCompare(userInput) === 0) {
+                        //console.log("TESTING: match");
+                        var p = document.createElement('P');
+                        var textNode = document.createTextNode(dropDownList[index]);
+                        p.appendChild(textNode);
+                        addEventListenerToP(p);
+                        searchDropDownList.appendChild(p);
                     }
                 }
-                appendChildP(mTextDropDownList, mInputTextDropDownList);
+                appendChildToSearchDropDownList(); //this adds the other entry
             }
             
-            function removeChildNodesAll(mNode) {
-                while (mNode.hasChildNodes()) {   
-                    mNode.removeChild(mNode.firstChild);                    
+            function removeChildNodesAll() {
+                var searchDropDownList  = document.getElementById('search_drop_down_list');
+                while (searchDropDownList.hasChildNodes()) {   
+                    searchDropDownList.removeChild(searchDropDownList.firstChild);                    
                 }
             }
             
             function searchValue() {
-                var mInputTextDropDownList = document
-                        .getElementById('input_text_drop_down_list');
-                var mTextDropDownList = document
-                        .getElementById('text_drop_down_list');
+                var searchDropDownInput = document.getElementById('search_drop_down_input');
+                var searchDropDownList  = document.getElementById('search_drop_down_list');
                 
-                var mArrayIndustryList = [
+                var dropDownList = [
                     'Agricultural Chemicals',
                     'Aluminum',
                     'Chemicals - Major Diversified',
@@ -216,27 +243,27 @@ POSSIBILITY OF SUCH DAMAGE.
                 
                 /*
                  * Clears the list regardless of input. If children removed
-                 * only input_text_drop_down_list.value = "", then the list
+                 * only searchDropDownInput.value = "", then the list
                  * grows each keystroke.
                  */
-                removeChildNodesAll(mTextDropDownList);
+                removeChildNodesAll();
                 
                 //Add <br> for spacing
                 var br = document.createElement('BR');
-                mTextDropDownList.appendChild(br);
+                searchDropDownList.appendChild(br);
                 
-                expandTextDropDownList(mTextDropDownList);
+                expandSearchDropDownList();
                 
                 /*
                  * Dynamically change the list based upon user input. Always
                  * check value(s) as lower case, to remove case-sensitivity.
                  */
-                if(mInputTextDropDownList.value !== "") {
-                    addChildNodesDynamicTextDropDownList(mArrayIndustryList);                    
+                if(searchDropDownInput.value !== "") {
+                    addSelectedArrayToSearchDropDownList(dropDownList);
                 } else {
-                    addChildNodesAllTextDropDownList(mArrayIndustryList);
+                    addEntireArrayToSearchDropDownList(dropDownList);
                 }                                
             }
-        </script>            
+        </script>
     </body>
 </html>
